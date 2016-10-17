@@ -57,14 +57,15 @@ namespace PathologicalGames
 		/// </summary>
 		public static DestroyDelegate DestroyDelegates;
 
-		/// <summary>
-		/// See the DestroyDelegates docs
-		/// </summary>
-		/// <param name="prefab">The prefab to spawn an instance from</param>
-		/// <param name="pos">The position to spawn the instance</param>
-		/// <param name="rot">The rotation of the new instance</param>
-		/// <returns>Transform</returns>
-		internal static GameObject InstantiatePrefab(GameObject prefab, Vector3 pos, Quaternion rot)
+        /// <summary>
+        /// See the DestroyDelegates docs
+        /// 如果设置了 自定义的实例化方法，可以在自己的实例化方法中统计销毁的对象
+        /// </summary>
+        /// <param name="prefab">The prefab to spawn an instance from</param>
+        /// <param name="pos">The position to spawn the instance</param>
+        /// <param name="rot">The rotation of the new instance</param>
+        /// <returns>Transform</returns>
+        internal static GameObject InstantiatePrefab(GameObject prefab, Vector3 pos, Quaternion rot)
 		{
 			if (InstanceHandler.InstantiateDelegates != null)
 			{
@@ -79,6 +80,7 @@ namespace PathologicalGames
 		
 		/// <summary>
 		/// See the InstantiateDelegates docs
+        /// 如果设置了 自定义的销毁方法，可以在自己的销毁方法中统计销毁的对象
 		/// </summary>
 		/// <param name="prefab">The prefab to spawn an instance from</param>
 		/// <returns>void</returns>
