@@ -72,6 +72,7 @@
     <Compile Include="Assets\PoolManagerExampleFiles\Scripts\CreationExample.cs" />
     <Compile Include="Assets\PoolManagerExampleFiles\Scripts\InstanceHandlerDelegateExample.cs" />
     <Compile Include="Assets\PoolManagerExampleFiles\Scripts\OnCreatedDelegateExample.cs" />
+    <Compile Include="Assets\PoolManagerExampleFiles\Scripts\OnNotify.cs" />
     <Compile Include="Assets\PoolManagerExampleFiles\Scripts\OnSpawnedExample.cs" />
     <Compile Include="Assets\PoolManagerExampleFiles\Scripts\ParticleWaitTest.cs" />
     <Compile Include="Assets\PoolManagerExampleFiles\Scripts\PreloadOverTime_getter.cs" />

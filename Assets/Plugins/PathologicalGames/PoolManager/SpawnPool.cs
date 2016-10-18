@@ -96,6 +96,11 @@ namespace PathologicalGames
         public bool logMessages = false;
 
         /// <summary>
+        /// sendMessage on OnSpawned or OnDespawned
+        /// </summary>
+        public bool sendMessage = false;
+
+        /// <summary>
         /// A list of PreloadDef options objects used by the inspector for user input
         /// </summary>
         public List<PrefabPool> _perPrefabPoolOptions = new List<PrefabPool>();
@@ -537,10 +542,11 @@ namespace PathologicalGames
                     this._spawned.Add(inst);
 					
 	                // Notify instance it was spawned so it can manage it's state
-	                inst.gameObject.BroadcastMessage(
-						"OnSpawned",
-						this,
-						SendMessageOptions.DontRequireReceiver
+                    if (sendMessage)
+                        inst.gameObject.BroadcastMessage(
+                            "OnSpawned",
+                            this,
+                            SendMessageOptions.DontRequireReceiver
 					);
 
                     // Done!
@@ -894,7 +900,7 @@ namespace PathologicalGames
             {
                 if (this._prefabPools[i]._spawned.Contains(instance))
                 {
-                    despawned = this._prefabPools[i].DespawnInstance(instance);
+                    despawned = this._prefabPools[i].DespawnInstance(instance, sendMessage);
                     break;
                 }  // Protection - Already despawned?
                 else if (this._prefabPools[i]._despawned.Contains(instance))
