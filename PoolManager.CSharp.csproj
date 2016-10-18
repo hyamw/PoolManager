@@ -74,6 +74,7 @@
     <Compile Include="Assets\PoolManagerExampleFiles\Scripts\OnCreatedDelegateExample.cs" />
     <Compile Include="Assets\PoolManagerExampleFiles\Scripts\OnSpawnedExample.cs" />
     <Compile Include="Assets\PoolManagerExampleFiles\Scripts\ParticleWaitTest.cs" />
+    <Compile Include="Assets\PoolManagerExampleFiles\Scripts\PreloadOverTime_getter.cs" />
     <Compile Include="Assets\PoolManagerExampleFiles\Scripts\ReallySimpleAudioSpawner.cs" />
     <Compile Include="Assets\PoolManagerExampleFiles\Scripts\ReallySimpleParticleSpawner.cs" />
     <Compile Include="Assets\PoolManagerExampleFiles\Scripts\SimpleSpawner.cs" />
