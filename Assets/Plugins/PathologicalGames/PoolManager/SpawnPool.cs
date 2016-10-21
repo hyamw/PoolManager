@@ -510,6 +510,7 @@ namespace PathologicalGames
         {
             Transform inst;
 
+            // 遍历所有的 prefab预制件队列，取出对应的 预制件
             #region Use from Pool
             for (int i = 0; i < this._prefabPools.Count; i++)
             {
@@ -555,7 +556,7 @@ namespace PathologicalGames
             }
             #endregion Use from Pool
 
-
+            // 预制件队列 中没有这个 预制件 所在的 队列，则new一个这个 预制件 的队列，并丢进 预制件队列 中
             #region New PrefabPool
             // The prefab wasn't found in any PrefabPools above. Make a new one
             PrefabPool newPrefabPool = new PrefabPool(prefab);
@@ -1581,8 +1582,16 @@ namespace PathologicalGames
                     SendMessageOptions.DontRequireReceiver
 				);
 
+            //可用再次扩展一下，send一个 Reset，重置预制件的所有数据
+            //if (isReset)
+            //    xform.gameObject.BroadcastMessage(
+            //        "Reset",
+            //        this.spawnPool,
+            //        SendMessageOptions.DontRequireReceiver
+            //    );
+
             // Deactivate the instance and all children
-			xform.gameObject.SetActive(false);
+            xform.gameObject.SetActive(false);
 
             // Trigger culling if the feature is ON and the size  of the 
             //   overall pool is over the Cull Above threashold.
@@ -1689,8 +1698,9 @@ namespace PathologicalGames
         {
             // Handle FIFO limiting if the limit was used and reached.
             //   If first-in-first-out, despawn item zero and continue on to respawn it
-            if (this.limitInstances && this.limitFIFO &&
-                this._spawned.Count >= this.limitAmount)
+            //如果限制对象个数，且 已使用对象 超过限制， 从 已使用对象 队列中取出 丢进 未使用对象 队列
+            if (this.limitInstances && this.limitFIFO && 
+                this._spawned.Count >= this.limitAmount) 
             {
                 Transform firstIn = this._spawned[0];
 
@@ -1715,6 +1725,7 @@ namespace PathologicalGames
 
             Transform inst;
 
+            //如果 未使用对象 队列没有可用对象，则 实例化 一个新对象
             // If nothing is available, create a new instance
             if (this._despawned.Count == 0)
             {
@@ -1775,6 +1786,7 @@ namespace PathologicalGames
         public Transform SpawnNew() { return this.SpawnNew(Vector3.zero, Quaternion.identity); }
         public Transform SpawnNew(Vector3 pos, Quaternion rot)
         {
+            //如果有限制总数，则直接return null
             // Handle limiting if the limit was used and reached.
             if (this.limitInstances && this.totalCount >= this.limitAmount)
             {
@@ -1796,6 +1808,7 @@ namespace PathologicalGames
             if (pos == Vector3.zero) pos = this.spawnPool.group.position;
             if (rot == Quaternion.identity) rot = this.spawnPool.group.rotation;
 
+            //实例化新对象
 			GameObject instGO = this.spawnPool.InstantiatePrefab(this.prefabGO, pos, rot);
 			Transform inst = instGO.transform;
 
@@ -1816,6 +1829,7 @@ namespace PathologicalGames
                 this.SetRecursively(inst, this.spawnPool.gameObject.layer);
 
             // Start tracking the new instance
+            //丢进 已使用 队列中
             this._spawned.Add(inst);
 
             if (this.logMessages)
