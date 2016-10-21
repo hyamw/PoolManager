@@ -1582,7 +1582,7 @@ namespace PathologicalGames
                     SendMessageOptions.DontRequireReceiver
 				);
 
-            //可用再次扩展一下，send一个 Reset，重置预制件的所有数据
+            //可用再次扩展一下，send 一个 Reset，重置预制件的所有数据
             //if (isReset)
             //    xform.gameObject.BroadcastMessage(
             //        "Reset",
@@ -1593,6 +1593,7 @@ namespace PathologicalGames
             // Deactivate the instance and all children
             xform.gameObject.SetActive(false);
 
+            //如果开启上限剔除，则在丢进 未使用 队列时触发
             // Trigger culling if the feature is ON and the size  of the 
             //   overall pool is over the Cull Above threashold.
             //   This is triggered here because Despawn has to occur before
@@ -1630,6 +1631,7 @@ namespace PathologicalGames
 
             while (this.totalCount > this.cullAbove)
             {
+                //每一次剔除的数量为 cullMaxPerPass，修改一下，分帧剔除
                 // Attempt to delete an amount == this.cullMaxPerPass
                 for (int i = 0; i < this.cullMaxPerPass; i++)
                 {
@@ -1663,6 +1665,9 @@ namespace PathologicalGames
 
                         break;
                     }
+
+                    //分帧剔除，防止一次销毁的 实例过大
+                    yield return null;
                 }
 
                 // Check again later
